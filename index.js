@@ -27,8 +27,8 @@ app.post('/api/users', (req, res) => {
   return res.json(n_user);
 });
 
-app.get('api/users', (req, res) => {
-  res.json(users);
+app.get('/api/users', (req, res) => {
+  return res.json(users);
 });
 
 app.post('/api/users/:_id/exercises', (req,res) => {
@@ -69,18 +69,18 @@ app.get('/api/users/:_id/logs', (req, res) => {
   const user = users.find(u => u._id === userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
 
-  let userExercises = users.filter(user => user.userId === userId);
+  let userExercises = exercises.filter(user => user.userId === userId);
 
   const { from, to, limit } = req.query;
 
   if (from) {
     const fromDate = new Date(from);
-    userExercises = users.filter(user => new Date(user.date) >= fromDate);
+    userExercises = userExercises.filter(user => new Date(user.date) >= fromDate);
   } 
 
   if (to) {
     const toDate = new Date(to);
-    userExercises = users.filter(user => new Date(user.date) <= toDate);
+    userExercises = userExercises.filter(user => new Date(user.date) <= toDate);
   } 
 
   if (limit) {
